@@ -21,6 +21,7 @@ export const HyperText = styled.div`
 export const BodyContent = styled.div`
   background-color: white;
   display: flex; 
-  height: 100vh; 
-  borderRadius: 5px;
+  min-height: 600px;
+  border-radius: 5px;
+  padding: 24px 24px
 `
