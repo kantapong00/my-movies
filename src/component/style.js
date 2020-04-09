@@ -1,4 +1,7 @@
 import styled from 'styled-components'
+import { Layout } from 'antd'
+
+const { Footer } = Layout
 
 export const Background = styled.div`
   display: flex;
@@ -23,5 +26,17 @@ export const BodyContent = styled.div`
   display: flex; 
   min-height: 600px;
   border-radius: 5px;
-  padding: 24px 24px
+  padding: 24px 24px;
+  justify-content: center;
+  align-items: center;
+`
+export const FooterStyle = styled(Footer)`
+&.ant-layout-footer {
+  margin-top: 24px;
+  padding: 24px 50px;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  background: #001529;
+}
 `
