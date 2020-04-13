@@ -1,9 +1,9 @@
 import React from 'react'
 import { List } from 'antd'
 import 'antd/dist/antd.css'
-import CardItems from './cardItem'
 import MovieListContext from './movieListContext'
 import MovieItemContext from './movieItemContext'
+const CardItems = React.lazy(() => import('./cardItem'))
 
 
 export default function ListItems() {

@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { Layout, Menu } from 'antd'
 import 'antd/dist/antd.css'
 import { BodyContent, FooterStyle } from '../component/style'
-import loadingIcon from '../component/asset/loading.gif'
 import MovieListContext from '../component/movieListContext'
-import ListItems from '../component/listItem'
+import loadingIcon from '../component/asset/loading.gif'
+const ListItems = React.lazy(() => import('../component/listItem'))
 
-export default function Main() {
+function Main() {
   const { Header, Content } = Layout
   const axios = require('axios').default
 
   const [movies, setMovies] = useState([])
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    axios.get('http://workshopup.herokuapp.com/movie')
-      .then(res => {
-        setLoading(false)
-        setMovies(res.data.results)
-      })
-      .catch(err => {
-        console.log('error', err)
-      })
-  }, [axios])
+    getMovies()
+  }, [])
+
+  const getMovies = async () => {
+    try {
+      let res = await axios.get("http://workshopup.herokuapp.com/movie");
+      let data = res.data.results
+      setMovies(data)
+    } catch (err) {
+      console.log('error', err)
+    }
+  }
 
   return (
     <Layout>
@@ -33,15 +35,15 @@ export default function Main() {
       </Header>
       <Content style={{ padding: '24px 24px 0px 24px' }}>
         <BodyContent>
-          {loading ?
-            <img src={loadingIcon} alt="loading" style={{ width: '64px' }} /> :
-            <MovieListContext.Provider value={movies}>
+          <MovieListContext.Provider value={movies}>
+            <Suspense fallback={<img src={loadingIcon} alt="loading" style={{ width: '10%' }} />}>
               <ListItems />
-            </MovieListContext.Provider>
-          }
+            </Suspense>
+          </MovieListContext.Provider>
         </BodyContent>
       </Content>
       <FooterStyle>My Movies ©2020 Created by Kantapong</FooterStyle>
     </Layout>
   )
 } 
+export default React.memo(Main)

@@ -40,3 +40,7 @@ export const FooterStyle = styled(Footer)`
   background: #001529;
 }
 `
+export const LikeIcon = styled.div`
+  font-size: 24px;
+  color: ${(props) => props.like ? 'red' : null};
+`

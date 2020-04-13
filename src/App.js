@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Route } from 'react-router-dom'
 import './App.css'
-import Main from './page/Main'
-import Landing from './page/Landing'
+const Main = React.lazy(() => import('./page/Main'))
+const Landing = React.lazy(() => import('./page/Landing'))
 
 export default function App() {
   return (
-    <div>
-    <Route exact path="/" component={Landing} />
-    <Route path="/main" component={Main} />
-  </div>
+    <Suspense fallback={null}>
+      <Route exact path="/" component={Landing} />
+      <Route path="/main" component={Main} />
+    </Suspense>
   )
 }

@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react'
-import { Card } from 'antd'
+import { Card, Typography } from 'antd'
 import 'antd/dist/antd.css'
-import TextTruncate from 'react-text-truncate'
-import MovieModal from './movieModal'
 import MovieItemContext from './movieItemContext'
+const MovieModal = React.lazy(() => import('./movieModal'))
 
 export default function CardItems(props) {
   const { Meta } = Card
+  const { Paragraph } = Typography
   const item = React.useContext(MovieItemContext)
   const [visible, setVisible] = useState(false)
 
@@ -32,12 +32,9 @@ export default function CardItems(props) {
         onClick={() => showModal()}
       >
         <Meta title={item.title} description={
-          <TextTruncate
-            line={3}
-            truncateText="..."
-            text={item.overview}
-            textTruncateChild={<a href="#">Read more</a>}
-          />
+          < Paragraph ellipsis={{ rows: 2, expandable: true, }}>
+            {item.overview}
+          </Paragraph>
         } />
       </Card>
 
